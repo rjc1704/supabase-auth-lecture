@@ -7,7 +7,7 @@ export const getPosts = async () => {
   console.log("error:", error);
   if (error) {
     console.log(error);
-    return;
+    throw error;
   }
   return posts;
 };
@@ -20,7 +20,7 @@ export const createPost = async ({ content, img_url = null, user_id }) => {
   console.log("posts in createPost:", posts);
   if (error) {
     console.log(error);
-    return;
+    throw error;
   }
   return posts;
 };

@@ -1,10 +1,6 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
-import { useEffect } from "react";
 import {
   deleteUser,
   getId,
@@ -28,14 +24,17 @@ function App() {
       </div>
       <button
         onClick={() => {
-          signUp({ email: "rjc1704@gmail.com" });
+          signUp({ email: "example@gmail.com", password: "123456" });
         }}
       >
         회원가입
       </button>
       <button
         onClick={() => {
-          signInWithEmail();
+          signInWithEmail({
+            email: "example@gmail.com",
+            password: "123456",
+          });
         }}
       >
         로그인

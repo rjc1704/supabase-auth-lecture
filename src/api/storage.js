@@ -8,7 +8,7 @@ export const uploadFile = async (file) => {
 
   if (error) {
     console.log(error);
-    return;
+    throw error;
   }
 
   const { data } = supabase.storage

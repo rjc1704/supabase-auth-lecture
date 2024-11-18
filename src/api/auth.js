@@ -1,27 +1,20 @@
 import { supabase } from "../supabase/supabaseClient";
 
-// TODO: 로그인된 사람만 게시물 등록할 수 있게 해둔 코드입니다. Supabase Authentication 에서 임시로 email 을 만드시고
-// 아래 email, password를 본인 것으로 변경해서 사용하세요.
-export const signInWithEmail = async ({
-  email = "example@gmail.com",
-  password = "example-password",
-}) => {
+export const signInWithEmail = async ({ email, password }) => {
+  console.log("email:", email);
   let { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
   if (error) {
     console.log(error);
-    return;
+    throw error;
   }
   console.log("data in signin:", data);
 };
 
 // auth.users.raw_user_meta_data 컬럼에 options.data 객체를 json 형식으로 저장합니다.
-export const signUp = async ({
-  email = "example@gmail.com",
-  password = "example-password",
-}) => {
+export const signUp = async ({ email, password }) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -37,7 +30,10 @@ export const signUp = async ({
 
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();
-  if (error) return console.log(error);
+  if (error) {
+    console.log(error);
+    throw error;
+  }
   console.log("로그아웃 완료");
 };
 
@@ -46,7 +42,10 @@ export const getUser = async () => {
     data: { user },
     error,
   } = await supabase.auth.getUser();
-  if (error) console.log("getUser error:", error);
+  if (error) {
+    console.log("getUser error:", error);
+    throw error;
+  }
   return user;
 };
 
@@ -59,7 +58,9 @@ export const getId = async () => {
     },
     error,
   } = await supabase.auth.getSession();
-  console.log(id);
+  if (error || !id) {
+    return alert("로그인 상태가 아닙니다.");
+  }
   return id;
 };
 
